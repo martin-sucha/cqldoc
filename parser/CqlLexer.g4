@@ -69,8 +69,12 @@ COLON
    ;
 
 
-SPACE
-   : [ \t\r\n] + -> channel (HIDDEN)
+HORIZONTAL_SPACE
+   : [ \t] + -> channel (HIDDEN)
+   ;
+
+VERTICAL_SPACE
+   : [\r\n] + -> channel (HIDDEN)
    ;
 
 

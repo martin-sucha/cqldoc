@@ -22,7 +22,8 @@ CREATE TABLE sp.mytable1 (
 
 /*
  * table multiline comment
- * is here
+ *
+ *    is here
  */
 CREATE TABLE sp.mytable2 (
 	col1 text

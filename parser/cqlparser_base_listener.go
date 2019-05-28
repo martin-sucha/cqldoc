@@ -1,4 +1,4 @@
-// Code generated from grammar/CqlParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from parser/CqlParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
 
 package parser // CqlParser
 
@@ -310,10 +310,12 @@ func (s *BaseCqlParserListener) EnterAlterTableRename(ctx *AlterTableRenameConte
 func (s *BaseCqlParserListener) ExitAlterTableRename(ctx *AlterTableRenameContext) {}
 
 // EnterAlterTableDropCompactStorage is called when production alterTableDropCompactStorage is entered.
-func (s *BaseCqlParserListener) EnterAlterTableDropCompactStorage(ctx *AlterTableDropCompactStorageContext) {}
+func (s *BaseCqlParserListener) EnterAlterTableDropCompactStorage(ctx *AlterTableDropCompactStorageContext) {
+}
 
 // ExitAlterTableDropCompactStorage is called when production alterTableDropCompactStorage is exited.
-func (s *BaseCqlParserListener) ExitAlterTableDropCompactStorage(ctx *AlterTableDropCompactStorageContext) {}
+func (s *BaseCqlParserListener) ExitAlterTableDropCompactStorage(ctx *AlterTableDropCompactStorageContext) {
+}
 
 // EnterAlterTableDropColumns is called when production alterTableDropColumns is entered.
 func (s *BaseCqlParserListener) EnterAlterTableDropColumns(ctx *AlterTableDropColumnsContext) {}
@@ -334,10 +336,12 @@ func (s *BaseCqlParserListener) EnterAlterTableAdd(ctx *AlterTableAddContext) {}
 func (s *BaseCqlParserListener) ExitAlterTableAdd(ctx *AlterTableAddContext) {}
 
 // EnterAlterTableColumnDefinition is called when production alterTableColumnDefinition is entered.
-func (s *BaseCqlParserListener) EnterAlterTableColumnDefinition(ctx *AlterTableColumnDefinitionContext) {}
+func (s *BaseCqlParserListener) EnterAlterTableColumnDefinition(ctx *AlterTableColumnDefinitionContext) {
+}
 
 // ExitAlterTableColumnDefinition is called when production alterTableColumnDefinition is exited.
-func (s *BaseCqlParserListener) ExitAlterTableColumnDefinition(ctx *AlterTableColumnDefinitionContext) {}
+func (s *BaseCqlParserListener) ExitAlterTableColumnDefinition(ctx *AlterTableColumnDefinitionContext) {
+}
 
 // EnterAlterRole is called when production alterRole is entered.
 func (s *BaseCqlParserListener) EnterAlterRole(ctx *AlterRoleContext) {}

@@ -1,4 +1,4 @@
-// Code generated from grammar/CqlParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from parser/CqlParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
 
 package parser // CqlParser
 
