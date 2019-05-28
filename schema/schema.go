@@ -1,4 +1,4 @@
-package cqldoc
+package schema
 
 import (
 	"bufio"
@@ -13,7 +13,7 @@ import (
 	"github.com/martin-sucha/cqldoc/parser"
 )
 
-type Document struct {
+type Schema struct {
 	Tables []*Table
 }
 
@@ -33,7 +33,7 @@ type Column struct {
 type documentParser struct {
 	*parser.BaseCqlParserListener
 	stream *antlr.CommonTokenStream
-	document *Document
+	document *Schema
 	currentTable *Table
 }
 
@@ -216,7 +216,7 @@ func (l *documentParser) EnterColumnDefinition(ctx *parser.ColumnDefinitionConte
 	l.currentTable.Columns = append(l.currentTable.Columns, column)
 }
 
-func Parse(r io.Reader) (*Document, error) {
+func Parse(r io.Reader) (*Schema, error) {
 	data, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
@@ -228,7 +228,7 @@ func Parse(r io.Reader) (*Document, error) {
 	p.AddErrorListener(antlr.NewDiagnosticErrorListener(true))
 	p.BuildParseTrees = true
 	tree := p.Root()
-	document := &Document{}
+	document := &Schema{}
 	antlr.ParseTreeWalkerDefault.Walk(&documentParser{
 		stream: stream,
 		document: document,
