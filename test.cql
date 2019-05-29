@@ -29,4 +29,10 @@ CREATE TABLE sp.mytable2 (
 	col1 text
 );
 
-ALTER TABLE sp.mytable ADD col3 map<string, int>, col4 blob
+ALTER TABLE sp.mytable ADD
+	-- col3 comment
+	col3 map<string, int>, /* col4 comment */col4 blob
+;
+
+ALTER TABLE sp.mytable RENAME col4 TO col5;
+ALTER TABLE sp.mytable DROP col3;
