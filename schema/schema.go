@@ -2,6 +2,7 @@
 package schema
 
 import (
+	"bytes"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/martin-sucha/cqldoc/parser"
 	"io"
@@ -24,6 +25,14 @@ type Column struct {
 	Comment string
 	Name string
 	CqlType string
+}
+
+type ParseError struct {
+	Message string
+}
+
+func (pe *ParseError) Error() string {
+	return pe.Message
 }
 
 // GetTable finds a table with the keyspace and name.
@@ -64,9 +73,12 @@ func (s *Table) DropColumn(name string) {
 // RenameColumn renames a column.
 func (s *Table) RenameColumn(oldName, newName string) {
 	oldColumn := s.GetColumn(oldName)
+	if oldColumn == nil {
+		panic(&ParseError{"Column does not exist"})
+	}
 	newColumn := s.GetColumn(newName)
 	if newColumn != nil {
-		panic("TODO")
+		panic(&ParseError{"Duplicate column found"})
 	}
 	oldColumn.Name = newName
 }
@@ -84,12 +96,39 @@ func Parse(r io.Reader) (*Schema, error) {
 	p.BuildParseTrees = true
 	tree := p.Root()
 	schema := &Schema{}
-	antlr.ParseTreeWalkerDefault.Walk(&documentParser{
-		stream: stream,
-		schema: schema,
-	}, tree)
+
+	err = recoverParseError(func() {
+		antlr.ParseTreeWalkerDefault.Walk(&documentParser{
+			stream: stream,
+			schema: schema,
+		}, tree)
+	})
+
+	if err != nil {
+		return nil, err
+	}
 
 	return schema, nil
+}
+
+func recoverParseError(f func()) (err error) {
+	defer func() {
+		recovered := recover()
+		if recovered == nil {
+			return
+		}
+		if recoveredErr, ok := recovered.(*ParseError); ok {
+			err = recoveredErr
+		} else {
+			panic(recovered)
+		}
+	}()
+	f()
+	return nil
+}
+
+func ParseString(cql string) (*Schema, error) {
+	return Parse(bytes.NewReader([]byte(cql)))
 }
 
 type documentParser struct {
@@ -151,7 +190,7 @@ func (l *documentParser) EnterAlterTable(ctx *parser.AlterTableContext) {
 
 	l.currentTable = l.schema.GetTable(keyspaceText, tableName.GetText())
 	if l.currentTable == nil {
-		panic("TODO")
+		panic(&ParseError{Message: "Table not found"})
 	}
 }
 
